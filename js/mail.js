@@ -44,3 +44,18 @@ function deleteChild() {
     const element = document.querySelector(".child-form");
     element.remove();
 }
+
+const myForm = document.getElementById('buyers_data_input');
+
+myForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = {};
+
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+
+    console.log(data);
+});
