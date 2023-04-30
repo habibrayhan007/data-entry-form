@@ -1,61 +1,84 @@
-//Append Child Form
-const addButton = document.querySelector('.add-input-field');
-const form = document.querySelector('form');
+let childFormCount = 0;
 
-addButton.addEventListener('click', () => {
-    const newFieldset = document.createElement('fieldset');
-    newFieldset.classList.add('mb-3');
-    newFieldset.innerHTML = `
-    <div class="child-form">
+const productForm = document.getElementById("child-form-container");
+
+document.getElementById("plus_btn").addEventListener('click', () => {
+    childFormCount++;
+    let childFormHTML = `
+    <div class="products-form ${"products-form-" + childFormCount}">
         <div class="child-header">
             <div class="child-heading">Product Information</div>
-            <a class="child-delete" onclick="deleteChild()">x</a>
+            <a class="child-delete" onclick="deleteChild('${"products-form-" + childFormCount}')" id ="delete_btn">x</a>
         </div>
         <div class="row">
         <div class="col-md-12 mb-3">
             <label for="product-name" class="form-label">Product Name</label>
-            <input type="text" class="form-control" id="product-name">
+            <input type="text" class="form-control" id=${"product_name" + childFormCount}>
         </div>
         <div class="col-md-12 mb-3">
             <label for="description" class="form-label">Description</label>
-            <input type="text" class="form-control" id="description">
+            <input type="text" class="form-control" id=${"product_desc" + childFormCount}>
         </div>
         <div class="col-md-12 mb-3">
             <label for="quantity" class="form-label">Quantity</label>
-            <input type="text" class="form-control" id="quantity">
+            <input type="text" class="form-control" id=${"product_quantity" + childFormCount}>
         </div>
         <div class="col-md-12 mb-3">
             <label for="rate" class="form-label">Rate</label>
-            <input type="text" class="form-control" id="rate">
+            <input type="text" class="form-control" id=${"product_rate" + childFormCount}>
         </div>
         <div class="col-md-12 mb-3">
             <label for="amount" class="form-label">Amount</label>
-            <input type="text" class="form-control" id="amount">
+            <input type="text" class="form-control" id=${"product_amount" + childFormCount}>
         </div>
         </div>
     </div>
-  `;
+`
 
-    form.insertBefore(newFieldset, form.lastElementChild);
+    const innerDiv = document.createElement("div");
+    innerDiv.innerHTML = childFormHTML;
+    productForm.appendChild(innerDiv);
+
 });
 
-//delete Child form
-function deleteChild() {
-    const element = document.querySelector(".child-form");
-    element.remove();
-}
+function deleteChild(c) {
+    /* const element = document.querySelector(".child-form");
+    element.remove(); */
+    let productsInfoForm = document.getElementsByClassName(c);
 
-const myForm = document.getElementById('buyers_data_input');
+    for (let productFormDiv in productsInfoForm) {
+        productForm.removeChild(productFormDiv.parentNode);
+    }
+};
 
-myForm.addEventListener('submit', (event) => {
-    event.preventDefault();
+let products = [];
+const submitBtn = document.getElementById('submit_btn');
+submitBtn.addEventListener('click', () => {
+    let productFormArea = document.getElementsByClassName("products-form");
 
-    const formData = new FormData(event.target);
-    const data = {};
+    products = [];
 
-    formData.forEach((value, key) => {
-        data[key] = value;
-    });
+    //console.log(productFormArea.length);
 
-    console.log(data);
+    for (let index = 1; index <= productFormArea.length; index++) {
+        let productObj = {
+            pName: document.getElementById(`product_name${index}`)?.value,
+            pDesc: document.getElementById(`product_desc${index}`)?.value,
+            pQuantity: document.getElementById(`product_quantity${index}`)?.value,
+            pPrice: document.getElementById(`product_rate${index}`)?.value,
+            tPrice: document.getElementById(`product_amount${index}`)?.value,
+        };
+        products.push(productObj);
+        console.log(productObj);
+    }
+    console.log({ products });
+
+    const showOutput = document.getElementById("output");
+
+    if (products.length) {
+        showOutput.innerHTML = JSON.stringify(products);
+    }
+    else {
+        showOutput.innerHTML = "";
+    }
 });
