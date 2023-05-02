@@ -1,4 +1,5 @@
 let childFormCount = 0;
+let skipIndex = [];
 
 const productForm = document.getElementById("child-form-container");
 
@@ -21,43 +22,39 @@ document.getElementById("plus_btn").addEventListener('click', () => {
         </div>
         <div class="col-md-12 mb-3">
             <label for="quantity" class="form-label">Quantity</label>
-            <input type="number" class="form-control" id=${"product_quantity" + childFormCount}>
+            <input type="text" class="form-control" id=${"product_quantity" + childFormCount}>
         </div>
         <div class="col-md-12 mb-3">
             <label for="rate" class="form-label">Rate</label>
-            <input type="number" class="form-control" id=${"product_rate" + childFormCount}>
+            <input type="text" class="form-control" id=${"product_rate" + childFormCount}>
         </div>
         <div class="col-md-12 mb-3">
             <label for="amount" class="form-label">Amount</label>
-            <input type="number" class="form-control" id=${"product_amount" + childFormCount}>
+            <input type="text" class="form-control" id=${"product_amount" + childFormCount}>
         </div>
         </div>
     </div>
 `
+
     const innerDiv = document.createElement("div");
     innerDiv.innerHTML = childFormHTML;
     productForm.appendChild(innerDiv);
+
 });
 
-
-
-let skipIndex = [];
-
 function deleteChild(c) {
+    /* const element = document.querySelector(".child-form");
+    element.remove(); */
     let className = `products-form-${c}`;
     console.log('deleteChild:', className);
     let productsInfoForm = document.getElementsByClassName(className);
 
     skipIndex.push(c);
 
-    console.log(skipIndex);
-
     for (let productFormDiv of productsInfoForm) {
         productForm.removeChild(productFormDiv.parentNode);
     }
 };
-
-
 
 let products = [];
 const submitBtn = document.getElementById('submit_btn');
@@ -89,8 +86,7 @@ submitBtn.addEventListener('click', () => {
     const showOutput = document.getElementById("output");
 
     if (products.length) {
-        let productJson = JSON.stringify(products, null, 1);
-        showOutput.innerHTML = productJson;
+        showOutput.innerHTML = JSON.stringify(products);
     }
     else {
         showOutput.innerHTML = "";
