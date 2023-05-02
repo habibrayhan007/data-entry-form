@@ -8,7 +8,7 @@ document.getElementById("plus_btn").addEventListener('click', () => {
     <div class="products-form ${"products-form-" + childFormCount}">
         <div class="child-header">
             <div class="child-heading">Product Information</div>
-            <a class="child-delete" onclick="deleteChild('${"products-form-" + childFormCount}')" id ="delete_btn">x</a>
+            <a class="child-delete" onclick="deleteChild(${childFormCount})" id ="delete_btn">x</a>
         </div>
         <div class="row">
         <div class="col-md-12 mb-3">
@@ -34,22 +34,30 @@ document.getElementById("plus_btn").addEventListener('click', () => {
         </div>
     </div>
 `
-
     const innerDiv = document.createElement("div");
     innerDiv.innerHTML = childFormHTML;
     productForm.appendChild(innerDiv);
-
 });
 
-function deleteChild(c) {
-    /* const element = document.querySelector(".child-form");
-    element.remove(); */
-    let productsInfoForm = document.getElementsByClassName(c);
 
-    for (let productFormDiv in productsInfoForm) {
+
+let skipIndex = [];
+
+function deleteChild(c) {
+    let className = `products-form-${c}`;
+    console.log('deleteChild:', className);
+    let productsInfoForm = document.getElementsByClassName(className);
+
+    skipIndex.push(c);
+
+    console.log(skipIndex);
+
+    for (let productFormDiv of productsInfoForm) {
         productForm.removeChild(productFormDiv.parentNode);
     }
 };
+
+
 
 let products = [];
 const submitBtn = document.getElementById('submit_btn');
@@ -58,9 +66,14 @@ submitBtn.addEventListener('click', () => {
 
     products = [];
 
-    //console.log(productFormArea.length);
+    console.log(productFormArea.length);
+    console.log(productFormArea);
 
-    for (let index = 1; index <= productFormArea.length; index++) {
+    for (let index = 1; index <= childFormCount; index++) {
+
+        if (skipIndex.includes(index))
+            continue;
+
         let productObj = {
             pName: document.getElementById(`product_name${index}`)?.value,
             pDesc: document.getElementById(`product_desc${index}`)?.value,
