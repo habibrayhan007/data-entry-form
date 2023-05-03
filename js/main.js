@@ -13,23 +13,23 @@ document.getElementById("plus_btn").addEventListener('click', () => {
         <div class="row">
         <div class="col-md-12 mb-3">
             <label for="product-name" class="form-label">Product Name</label>
-            <input type="text" class="form-control" id=${"product_name" + childFormCount}>
+            <input type="text" class="form-control product-name" id=${"product_name" + childFormCount}>
         </div>
         <div class="col-md-12 mb-3">
             <label for="description" class="form-label">Description</label>
-            <input type="text" class="form-control" id=${"product_desc" + childFormCount}>
+            <input type="text" class="form-control product-desc" id=${"product_desc" + childFormCount}>
         </div>
         <div class="col-md-12 mb-3">
             <label for="quantity" class="form-label">Quantity</label>
-            <input type="number" class="form-control" id=${"product_quantity" + childFormCount}>
+            <input type="number" class="form-control product-quantity" id=${"product_quantity" + childFormCount}>
         </div>
         <div class="col-md-12 mb-3">
             <label for="rate" class="form-label">Rate</label>
-            <input type="number" class="form-control" id=${"product_rate" + childFormCount}>
+            <input type="number" class="form-control product-rate" id=${"product_rate" + childFormCount}>
         </div>
         <div class="col-md-12 mb-3">
             <label for="amount" class="form-label">Amount</label>
-            <input type="number" class="form-control" id=${"product_amount" + childFormCount}>
+            <input type="number" class="form-control product-amount" id=${"product_amount" + childFormCount}>
         </div>
         </div>
     </div>
@@ -62,14 +62,34 @@ function deleteChild(c) {
 let products = [];
 const submitBtn = document.getElementById('submit_btn');
 submitBtn.addEventListener('click', () => {
-    let productFormArea = document.getElementsByClassName("products-form");
+    let productFormArray = Array.from(document.getElementsByClassName("products-form"));
 
     products = [];
 
-    //console.log(productFormArea.length);
-    console.log(productFormArea);
+    productFormArray.forEach(productForm => {
 
-    for (let index = 1; index <= childFormCount; index++) {
+
+        let productObj = {
+            pName: productForm.querySelectorAll(".product-name")[0].value,
+            pDesc: productForm.querySelectorAll(".product-desc")[0].value,
+            pQuantity: productForm.querySelectorAll(".product-quantity")[0].value,
+            pPrice: productForm.querySelectorAll(".product-rate")[0].value,
+            tPrice: productForm.querySelectorAll(".product-amount")[0].value,
+
+
+        };
+        //console.log({ pNameValue });
+        products.push(productObj);
+        console.log(productObj);
+    })
+
+
+
+
+    //console.log(productFormArea.length);
+    //console.log(productFormArea);
+
+    /* for (let index = 1; index <= childFormCount; index++) {
 
         if (skipIndex.includes(index))
             continue;
@@ -83,7 +103,7 @@ submitBtn.addEventListener('click', () => {
         };
         products.push(productObj);
         console.log(productObj);
-    }
+    } */
     console.log({ products });
 
     const showOutput = document.getElementById("output");
