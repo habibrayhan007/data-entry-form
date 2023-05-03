@@ -66,7 +66,7 @@ submitBtn.addEventListener('click', () => {
 
     products = [];
 
-    console.log(productFormArea.length);
+    //console.log(productFormArea.length);
     console.log(productFormArea);
 
     for (let index = 1; index <= childFormCount; index++) {
