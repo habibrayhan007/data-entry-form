@@ -66,8 +66,7 @@ submitBtn.addEventListener('click', () => {
 
     products = [];
 
-    productFormArray.forEach(productForm => {
-
+    productFormArray.forEach((productForm) => {
 
         let productObj = {
             pName: productForm.querySelectorAll(".product-name")[0].value,
@@ -75,35 +74,12 @@ submitBtn.addEventListener('click', () => {
             pQuantity: productForm.querySelectorAll(".product-quantity")[0].value,
             pPrice: productForm.querySelectorAll(".product-rate")[0].value,
             tPrice: productForm.querySelectorAll(".product-amount")[0].value,
-
-
         };
-        //console.log({ pNameValue });
+
         products.push(productObj);
         console.log(productObj);
     })
 
-
-
-
-    //console.log(productFormArea.length);
-    //console.log(productFormArea);
-
-    /* for (let index = 1; index <= childFormCount; index++) {
-
-        if (skipIndex.includes(index))
-            continue;
-
-        let productObj = {
-            pName: document.getElementById(`product_name${index}`)?.value,
-            pDesc: document.getElementById(`product_desc${index}`)?.value,
-            pQuantity: document.getElementById(`product_quantity${index}`)?.value,
-            pPrice: document.getElementById(`product_rate${index}`)?.value,
-            tPrice: document.getElementById(`product_amount${index}`)?.value,
-        };
-        products.push(productObj);
-        console.log(productObj);
-    } */
     console.log({ products });
 
     const showOutput = document.getElementById("output");
